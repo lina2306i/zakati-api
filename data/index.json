@@ -1,0 +1,102 @@
+{
+  "api_base": "https://lina2306i.github.io/zakati-api",
+  "url_pattern": "https://lina2306i.github.io/zakati-api/data/{hijri_year}/{country_code}.json",
+  "schema": "https://lina2306i.github.io/zakati-api/schema/country.schema.json",
+  "last_generated": "2026-10-16",
+  "hijri_years": [
+    "1448"
+  ],
+  "countries_by_year": {
+    "1448": [
+      {
+        "code": "ae",
+        "country_code": "AE",
+        "name_ar": "الإمارات العربية المتحدة",
+        "name_en": "United Arab Emirates",
+        "currency": "AED",
+        "status": "partial",
+        "last_updated": "2026-10-16",
+        "path": "data/1448/ae.json",
+        "url": "https://lina2306i.github.io/zakati-api/data/1448/ae.json"
+      },
+      {
+        "code": "dz",
+        "country_code": "DZ",
+        "name_ar": "الجزائر",
+        "name_en": "Algeria",
+        "currency": "DZD",
+        "status": "partial",
+        "last_updated": "2026-10-16",
+        "path": "data/1448/dz.json",
+        "url": "https://lina2306i.github.io/zakati-api/data/1448/dz.json"
+      },
+      {
+        "code": "eg",
+        "country_code": "EG",
+        "name_ar": "مصر",
+        "name_en": "Egypt",
+        "currency": "EGP",
+        "status": "partial",
+        "last_updated": "2026-10-16",
+        "path": "data/1448/eg.json",
+        "url": "https://lina2306i.github.io/zakati-api/data/1448/eg.json"
+      },
+      {
+        "code": "id",
+        "country_code": "ID",
+        "name_ar": "إندونيسيا",
+        "name_en": "Indonesia",
+        "currency": "IDR",
+        "status": "partial",
+        "last_updated": "2026-10-16",
+        "path": "data/1448/id.json",
+        "url": "https://lina2306i.github.io/zakati-api/data/1448/id.json"
+      },
+      {
+        "code": "ma",
+        "country_code": "MA",
+        "name_ar": "المغرب",
+        "name_en": "Morocco",
+        "currency": "MAD",
+        "status": "partial",
+        "last_updated": "2026-10-16",
+        "path": "data/1448/ma.json",
+        "url": "https://lina2306i.github.io/zakati-api/data/1448/ma.json"
+      },
+      {
+        "code": "my",
+        "country_code": "MY",
+        "name_ar": "ماليزيا",
+        "name_en": "Malaysia",
+        "currency": "MYR",
+        "status": "partial",
+        "last_updated": "2026-10-16",
+        "path": "data/1448/my.json",
+        "url": "https://lina2306i.github.io/zakati-api/data/1448/my.json"
+      },
+      {
+        "code": "sa",
+        "country_code": "SA",
+        "name_ar": "المملكة العربية السعودية",
+        "name_en": "Saudi Arabia",
+        "currency": "SAR",
+        "status": "partial",
+        "last_updated": "2026-10-16",
+        "path": "data/1448/sa.json",
+        "url": "https://lina2306i.github.io/zakati-api/data/1448/sa.json"
+      },
+      {
+        "code": "tn",
+        "country_code": "TN",
+        "name_ar": "تونس",
+        "name_en": "Tunisia",
+        "currency": "TND",
+        "status": "complete",
+        "last_updated": "2026-10-16",
+        "path": "data/1448/tn.json",
+        "url": "https://lina2306i.github.io/zakati-api/data/1448/tn.json"
+      }
+    ]
+  },
+  "total_files": 8
+}

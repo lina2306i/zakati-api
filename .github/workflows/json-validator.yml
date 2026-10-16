@@ -2,16 +2,19 @@ name: JSON Validator
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
+  push:
+    branches: [main]
     paths:
-      - "data/**/*.json"
+      - "data/**"
+      - "scripts/**"
+      - "schema/**"
+      - ".github/workflows/json-validator.yml"
 
 jobs:
   validate-json:
-    name: Validate country JSON files
+    name: Validate country datasets
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,20 +24,5 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Validate all JSON files under data/
-        run: |
-          set -euo pipefail
-          echo "Scanning data/**/*.json for syntax errors..."
-          count=0
-          while IFS= read -r -d '' file; do
-            echo "Checking: $file"
-            python -m json.tool "$file" > /dev/null
-            count=$((count + 1))
-          done < <(find data -type f -name '*.json' -print0 | sort -z)
-
-          if [ "$count" -eq 0 ]; then
-            echo "No JSON files found under data/"
-            exit 1
-          fi
-
-          echo "Success: validated $count JSON file(s)."
+      - name: Validate JSON syntax + DX schema rules
+        run: python scripts/validate_data.py

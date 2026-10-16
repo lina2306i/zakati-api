@@ -1,0 +1,65 @@
+name: Scaffold New Hijri Year
+
+on:
+  workflow_dispatch:
+    inputs:
+      hijri_year:
+        description: "New Hijri year (e.g. 1449)"
+        required: true
+        type: string
+      gregorian_year:
+        description: "Matching Gregorian year (e.g. 2027)"
+        required: true
+        type: string
+      from_year:
+        description: "Source Hijri year to copy from (leave empty = latest)"
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  scaffold:
+    name: Scaffold year folder
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run scaffold script
+        run: |
+          ARGS=(--year "${{ inputs.hijri_year }}" --gregorian "${{ inputs.gregorian_year }}")
+          if [ -n "${{ inputs.from_year }}" ]; then
+            ARGS+=(--from "${{ inputs.from_year }}")
+          fi
+          python scripts/scaffold_year.py "${ARGS[@]}"
+
+      - name: Validate generated files
+        run: python scripts/validate_data.py
+
+      - name: Open Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: scaffold Hijri year ${{ inputs.hijri_year }} datasets"
+          title: "chore: scaffold data/${{ inputs.hijri_year }} for official updates"
+          body: |
+            ## Summary
+            Auto-scaffolded country files for Hijri year **${{ inputs.hijri_year }}** (Gregorian ${{ inputs.gregorian_year }}).
+
+            ## Maintainer checklist
+            - [ ] Update `official_source_url` for each country
+            - [ ] Set `zakat_al_fitr.value_per_person` from Fatwa council announcements
+            - [ ] Set `zakat_categories.zakat_al_mal.nisab_cash` from official Nisab
+            - [ ] Change `status` from `needs_update` → `partial` / `complete`
+            - [ ] Refresh `last_updated` (YYYY-MM-DD)
+
+            Generated via **Actions → Scaffold New Hijri Year**.
+          branch: scaffold/hijri-${{ inputs.hijri_year }}
+          labels: data,hijri-year,needs-review

@@ -1,0 +1,146 @@
+{
+  "hijri_year": 1448,
+  "gregorian_year": 2026,
+  "last_updated": "YYYY-MM-DD",
+  "status": "stub",
+  "country_code": "XX",
+  "country_name_ar": "اسم الدولة",
+  "country_name_en": "Country Name",
+  "currency": "XXX",
+  "official_source_url": "https://official-fatwa-council.example",
+  "zakat_al_fitr": {
+    "value_per_person": null,
+    "notes_ar": "أضف بيان دار الإفتاء الرسمي لزكاة الفطر.",
+    "notes_en": "Add the official Fatwa council Zakat al-Fitr announcement."
+  },
+  "zakat_categories": {
+    "zakat_al_mal": {
+      "category_ar": "الأموال النقدية والذهب والفضة وعروض التجارة",
+      "category_en": "Cash, Gold, Silver, and Commercial Goods",
+      "nisab_cash": null,
+      "nisab_gold_grams": 85,
+      "nisab_silver_grams": 595,
+      "percentage_rate": 2.5,
+      "conditions_ar": [
+        "بلوغ النصاب المعتمد",
+        "دوران الحول القمري الكامل",
+        "الملكية التامة والخلو من الدين"
+      ],
+      "conditions_en": [
+        "Reaching the approved Nisab",
+        "Possession for one full lunar year",
+        "Full ownership and debt-free status"
+      ]
+    },
+    "agriculture": {
+      "category_ar": "الزروع والثمار",
+      "category_en": "Crops and Fruits",
+      "nisab_value": 5,
+      "nisab_unit": "awsuq",
+      "nisab_kg_approx": 750,
+      "nisab_ar": "5 أوسق",
+      "nisab_en": "5 Awsuq",
+      "rates": [
+        {
+          "type_ar": "بعلي",
+          "type_en": "Rain-fed",
+          "rate_percentage": 10.0
+        },
+        {
+          "type_ar": "سقوي",
+          "type_en": "Artificially irrigated",
+          "rate_percentage": 5.0
+        }
+      ],
+      "conditions_ar": ["بلوغ النصاب وقت الحصاد ولا يشترط الحول"],
+      "conditions_en": ["Reaching Nisab at harvest; lunar year does not apply"]
+    },
+    "livestock": {
+      "category_ar": "الأنعام والمواشي",
+      "category_en": "Livestock (An'am)",
+      "sub_categories": [
+        {
+          "type_ar": "الإبل",
+          "type_en": "Camels",
+          "nisab_value": 5,
+          "nisab_unit": "heads",
+          "nisab_ar": "5 إبل",
+          "nisab_en": "5 camels",
+          "rate_ar": "في كل 5 إبل شاة",
+          "rate_en": "1 sheep for every 5 camels"
+        },
+        {
+          "type_ar": "البقر",
+          "type_en": "Cows/Cattle",
+          "nisab_value": 30,
+          "nisab_unit": "heads",
+          "nisab_ar": "30 بقرة",
+          "nisab_en": "30 cows",
+          "rate_ar": "في كل 30 تبيع، وفي كل 40 مسنة",
+          "rate_en": "For every 30: 1 Tabi'; for every 40: 1 Musinnah"
+        },
+        {
+          "type_ar": "الغنم والماعز",
+          "type_en": "Sheep and Goats",
+          "nisab_value": 40,
+          "nisab_unit": "heads",
+          "nisab_ar": "40 شاة",
+          "nisab_en": "40 sheep/goats",
+          "rate_ar": "من 40 إلى 120 شاة واحدة ثم تتدرج",
+          "rate_en": "40–120: 1 sheep, then scaled"
+        }
+      ],
+      "conditions_ar": ["سائمة معظم العام + دوران الحول"],
+      "conditions_en": ["Saimah most of the year + one lunar year"]
+    },
+    "treasures_and_minerals": {
+      "category_ar": "الركاز والمعادن",
+      "category_en": "Rikaz and Minerals",
+      "sub_categories": [
+        {
+          "type_ar": "الركاز",
+          "type_en": "Rikaz",
+          "nisab_value": null,
+          "nisab_ar": "لا يشترط نصاب ولا حول",
+          "nisab_en": "No Nisab or lunar year required",
+          "rate_percentage": 20.0,
+          "rate_ar": "الخمس (20%)",
+          "rate_en": "One-fifth (20%)"
+        },
+        {
+          "type_ar": "المعادن",
+          "type_en": "Minerals",
+          "nisab_value": 85,
+          "nisab_unit": "gold_grams",
+          "nisab_ar": "نصاب الذهب 85 غ",
+          "nisab_en": "Gold Nisab 85 g",
+          "rate_percentage": 2.5,
+          "rate_ar": "ربع العشر (2.5%)",
+          "rate_en": "2.5%"
+        }
+      ]
+    }
+  },
+  "asnaf_al_zakat": {
+    "ar": [
+      "الفقراء",
+      "المساكين",
+      "العاملون عليها",
+      "المؤلفة قلوبهم",
+      "في الرقاب",
+      "الغارمون",
+      "في سبيل الله",
+      "ابن السبيل"
+    ],
+    "en": [
+      "Al-Fuqara",
+      "Al-Masakin",
+      "Al-Amilina Alayha",
+      "Al-Mu'allafati Qulubuhum",
+      "Fi al-Riqab",
+      "Al-Gharimin",
+      "Fi Sabilillah",
+      "Ibn al-Sabil"
+    ]
+  }
+}

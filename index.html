@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zakati API — Official Zakat Data CDN</title>
+    <meta
+      name="description"
+      content="Open-source static API for official Zakat Nisab and Zakat al-Fitr data by country and Hijri year."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="topbar">
+        <a class="brand" href="./">Zakati API</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#catalog">Catalog</a>
+          <a href="#how">How it works</a>
+          <a href="https://github.com/lina2306i/zakati-api">GitHub</a>
+          <a href="https://github.com/lina2306i/zakati-api#readme">Docs</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <span class="hero-kicker">Static · Official · Open Source</span>
+        <h1>Zakati API</h1>
+        <p class="hero-ar" lang="ar" dir="rtl">
+          واجهة برمجية مفتوحة المصدر لبيانات الزكاة الرسمية حسب الدولة والسنة الهجرية.
+        </p>
+        <p>
+          A free GitHub Pages CDN for Sharia-compliant Zakat datasets — Nisab,
+          Zakat al-Fitr, agriculture, livestock, and more — maintained from
+          official Fatwa council sources.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#catalog">Browse countries</a>
+          <a
+            class="btn btn-ghost"
+            href="https://lina2306i.github.io/zakati-api/data/1448/tn.json"
+            >Try Tunisia JSON</a
+          >
+        </div>
+      </section>
+
+      <section class="section" id="how">
+        <h2>How it works</h2>
+        <p class="lead">
+          Every country is a plain JSON file. No auth, no rate limits, no servers
+          to maintain — just HTTP GET.
+        </p>
+        <div class="panel">
+          <pre class="code" id="url-pattern">https://lina2306i.github.io/zakati-api/data/{hijri_year}/{country_code}.json</pre>
+        </div>
+      </section>
+
+      <section class="section" id="catalog">
+        <h2>Available datasets</h2>
+        <p class="lead">
+          Loaded live from <code>data/index.json</code>. Filter by Hijri year or
+          search by country.
+        </p>
+
+        <div class="filters">
+          <label>
+            Year
+            <select id="year-select" aria-label="Hijri year"></select>
+          </label>
+          <label>
+            Search
+            <input
+              id="search"
+              type="search"
+              placeholder="Tunisia, مصر, AE…"
+              aria-label="Search countries"
+            />
+          </label>
+        </div>
+
+        <div id="country-grid" class="grid" aria-live="polite"></div>
+        <p id="empty" class="empty" hidden>No countries match your filter.</p>
+      </section>
+
+      <footer class="footer">
+        <p>
+          Maintained by
+          <a href="https://github.com/lina2306i">@lina2306i</a> · MIT License ·
+          <a href="https://github.com/lina2306i/zakati-api">Contribute on GitHub</a>
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const grid = document.getElementById("country-grid");
+      const yearSelect = document.getElementById("year-select");
+      const searchInput = document.getElementById("search");
+      const empty = document.getElementById("empty");
+      const urlPattern = document.getElementById("url-pattern");
+
+      let catalog = null;
+
+      function statusClass(status) {
+        if (status === "complete") return "badge";
+        if (status === "needs_update") return "badge needs_update";
+        return "badge partial";
+      }
+
+      function render() {
+        if (!catalog) return;
+        const year = yearSelect.value;
+        const q = searchInput.value.trim().toLowerCase();
+        const list = (catalog.countries_by_year[year] || []).filter((c) => {
+          if (!q) return true;
+          return (
+            c.code.includes(q) ||
+            (c.name_en || "").toLowerCase().includes(q) ||
+            (c.name_ar || "").includes(searchInput.value.trim()) ||
+            (c.currency || "").toLowerCase().includes(q)
+          );
+        });
+
+        grid.innerHTML = "";
+        empty.hidden = list.length > 0;
+
+        list.forEach((c) => {
+          const card = document.createElement("article");
+          card.className = "card";
+          card.innerHTML = `
+            <span class="${statusClass(c.status)}">${c.status || "partial"}</span>
+            <h3>${c.name_en}</h3>
+            <div class="meta">${c.name_ar || ""} · ${c.currency || ""} · ${c.country_code}</div>
+            <a class="endpoint" href="${c.url}">${c.path}</a>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      async function boot() {
+        const res = await fetch("./data/index.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("Failed to load catalog");
+        catalog = await res.json();
+
+        if (catalog.url_pattern) {
+          urlPattern.textContent = catalog.url_pattern;
+        }
+
+        const years = catalog.hijri_years || Object.keys(catalog.countries_by_year || {});
+        yearSelect.innerHTML = years
+          .map((y) => `<option value="${y}">${y} AH</option>`)
+          .join("");
+        if (years.length) yearSelect.value = years[years.length - 1];
+
+        yearSelect.addEventListener("change", render);
+        searchInput.addEventListener("input", render);
+        render();
+      }
+
+      boot().catch((err) => {
+        empty.hidden = false;
+        empty.textContent = "Could not load data/index.json — check GitHub Pages deployment.";
+        console.error(err);
+      });
+    </script>
+  </body>
+</html>
